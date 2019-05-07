@@ -1,26 +1,88 @@
 import React from 'react';
-import logo from './logo.svg';
+import Navbar from "./components/Navbar";
+import Jumbotron from "./components/Jumbotron";
+import FriendCard from "./components/FriendCard";
+import Footer from "./components/Footer";
+import friend from "./friends.json";
 import './App.css';
 
-function App() {
+//Sets state to a 0 or empty
+class App extends App {
+
+  state = {
+    friend,
+    clickedFriend: [],
+    score: 0
+  };
+
+  // when you click on a card. the friend is taken out of the array
+
+imageCLick = event => {
+  const currentFriend = event.target.alt;
+  const friendAlreadyClicked = this.state.clickedFriend.indexOf(currentFriend) > -1;
+
+  // if you click on a friend that has already been selected, the game is reset and cards reordered.
+  if (friendAlreadyClicked) {
+    this.setState({
+      friend: this.state.friend.sort(function(a, b) {
+        return 0.5 - Math.random();
+      }),
+      clickedFriend: [],
+      score: 0
+      });
+      alert("You lose. Play again?");
+  
+  // if you click on an available friend, your score is increased and cards reordered 
+    } else {
+      this.setState({
+        friend: this.state.friend.sort(function(a, b){
+          return 0.5 - Math.random();
+        }),
+        clickedFriend: this.state.clickedFriend.concat(
+          currentFriend
+        ),
+        score: this.state.score + 1
+      },
+
+//if you get all 12 friend current you get a congrats message and the game resets
+    () => {
+      if (this.state.score === 12) {
+        alert("Yay! You Win!");
+        this.setState({
+          friehd: this.state.fish.sort(function(a, b) {
+            return 0.5 - Math.random();
+          }),
+          clickedFriend: [],
+          score: 0
+        });
+      }
+    }
+  );
+  }
+};
+//the order of components to be rendered: navbar, jumbotron, friendcard, footer 
+render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar 
+        score={this.state.score}
+      />
+      <Jumbotron />
+      <div className="wrapper">
+        {this.state.fish.map(fish => (
+          <FriendCard
+            imageClick={this.imageClick}
+            id={fish.id}
+            key={fish.id}
+            image={fish.image}
+          />
+        ))}
+      </div>
+      <Footer />
     </div>
   );
 }
+}
 
 export default App;
+
