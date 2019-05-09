@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from "react";
 import Navbar from "./components/Navbar";
 import Jumbotron from "./components/Jumbotron";
 import FriendCard from "./components/FriendCard";
@@ -7,7 +7,7 @@ import friend from "./friends.json";
 import './App.css';
 
 //Sets state to a 0 or empty
-class App extends App {
+class App extends Component {
 
   state = {
     friend,
@@ -17,8 +17,8 @@ class App extends App {
 
   // when you click on a card. the friend is taken out of the array
 
-imageCLick = event => {
-  const currentFriend = event.target.alt;
+imageClick = event => {
+  const currentFriend = event.target.event;
   const friendAlreadyClicked = this.state.clickedFriend.indexOf(currentFriend) > -1;
 
   // if you click on a friend that has already been selected, the game is reset and cards reordered.
@@ -49,7 +49,7 @@ imageCLick = event => {
       if (this.state.score === 12) {
         alert("Yay! You Win!");
         this.setState({
-          friehd: this.state.fish.sort(function(a, b) {
+          friend: this.state.friend.sort(function(a, b) {
             return 0.5 - Math.random();
           }),
           clickedFriend: [],
@@ -68,13 +68,13 @@ render() {
         score={this.state.score}
       />
       <Jumbotron />
-      <div className="wrapper">
-        {this.state.fish.map(fish => (
+      <div className = "wrapper">
+        {this.state.friend.map(friend => (
           <FriendCard
             imageClick={this.imageClick}
-            id={fish.id}
-            key={fish.id}
-            image={fish.image}
+            id={friend.id}
+            key={friend.id}
+            image={friend.image}
           />
         ))}
       </div>
