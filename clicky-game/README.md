@@ -1,9 +1,9 @@
-#Super Mario Clicky Game
+# Super Mario Clicky Game
 
-##Overview
+## Overview
 This is a memory game using React. The application's UI is split into four components.
 
-###ReactJS Application
+### ReactJS Application
 
 
 The app should keep track of the user's score. The user's score should be incremented when clicking an image for the first time. The user's score should be reset to 0 if they click the same image more than once.
